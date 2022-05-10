@@ -5,30 +5,65 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>France</title>
+  <style>
+    li {
+      cursor: pointer;
+    }
+    li:hover {
+      text-decoration: underline;
+    }
+    main {
+      display: flex;
+    }
+  </style>
 </head>
 <body>
-  Objectif : afficher les régions de france, 
-  et lorsque je clique sur une region, 
-  j'affiche les départements de cette région
-  (Le tout sans recharger la page)
+  <p>
+    Objectif : afficher les régions de france, 
+    et lorsque je clique sur une region, 
+    j'affiche les départements de cette région
+    (Le tout sans recharger la page)
+  </p>
 
-  <ul id="regions"></ul>
+  <main>
+    <ul id="regions"></ul>
+    <ul id="departements"></ul>
+  </main>
 </body>
 
 <script>
   // Requêter et afficher les données de l'API gouv
 
-  const url = "https://geo.api.gouv.fr/regions";
-  fetch(url)
-    .then(res => res.json())
-    .then(regions => {
-      
+  async function fetchAndDisplayRegions() {
+    const httpResponse = await fetch("https://geo.api.gouv.fr/regions");
+    const regions = await httpResponse.json();
+    
+    regions.forEach((region) => {
       const ulElement = document.getElementById("regions");
 
-      regions.forEach((region) => {
-        ulElement.insertAdjacentHTML("beforeend", `<li>${region.nom}</li>`);
+      const liElement = document.createElement("li");
+      liElement.textContent = region.nom;
+      ulElement.insertAdjacentElement("beforeend", liElement);
+
+      liElement.addEventListener("click", async () => {
+        // On veut maintenant fetch les departement de la région
+        const url = `https://geo.api.gouv.fr/regions/${region.code}/departements`;
+        const httpResponse = await fetch(url);
+        const departements = await httpResponse.json();
+        
+        const ulElement = document.getElementById("departements");
+        ulElement.innerHTML = "";
+
+        departements.forEach(departement => {
+          const liElement = document.createElement("li");
+          liElement.textContent = departement.nom;
+          ulElement.insertAdjacentElement("beforeend", liElement);
+        });
       });
     });
+  }
+
+  fetchAndDisplayRegions();
 
 </script>
 </html>
