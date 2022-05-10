@@ -1,14 +1,16 @@
-USER: identifiant, nom, rôle
-PEUT CREER, 11 LISTE, 0N USER
-LISTE: code_liste, nom
+CF MDCD.tldr
 
-CONTIENT, 0N LISTE, 1N CARTE
-CARTE: code_carte, titre, position
+USER: code_user, firstname, lastname
+CREER, 0N USER, 11 LISTE
+
+LISTE: code_liste, nom
+CREER2, 0N USER, 11 CARTE
+CONTIENT, 0N LISTE, 11 CARTE
+CARTE: code_carte, titre, description, position 
 
 POSSEDE, 01 CARTE, 0N COULEUR
-COULEUR: code_couleur, nom
+POSSEDE2, 0N LABEL, 0N CARTE
 
-POSSEDE1, 1N LABEL, 1N COULEUR
 LABEL: code_label, nom
-
-POSSEDE2, 1N LABEL, 0N CARTE
+POSSEDE3, 1N LABEL, 0N COULEUR
+COULEUR: code_couleur, nom
