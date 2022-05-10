@@ -310,11 +310,11 @@
             "parentId": "page",
             "childIndex": 9,
             "point": [
-              545,
+              549,
               317.12
             ],
             "rotation": 0,
-            "text": "conttient",
+            "text": "contient",
             "style": {
               "color": "black",
               "size": "small",
