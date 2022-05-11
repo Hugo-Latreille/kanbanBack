@@ -22,7 +22,7 @@ Label.init(
 		created_at: {
 			type: DataTypes.DATE,
 			allowNull: false,
-			defaultValue: literal("CURRENT_TIMESTAMP"),
+			defaultValue: DataTypes.NOW,
 		},
 		updated_at: {
 			type: DataTypes.DATE,
