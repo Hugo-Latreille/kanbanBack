@@ -26,6 +26,12 @@ INSERT INTO "carte_has_label" ("id", "carte_id", "label_id") VALUES
 
 COMMIT;
 
+
+--! Question : kesaco ?
+-- Postgres avec le fait d'ajouter IDENTITY BY DEFAULT au lieu de ALWAYS ne met pas à jour le curseur de l'incrément de la séquence de façon implicite !
+-- Il faut donc mettre à jour la valeur courante de chacune des séquences en séléctionnant l'id maximum de chaque table
+--
+
 -- BEGIN;
 
 -- SELECT setval('liste_id', (SELECT MAX(id) from "liste"));
