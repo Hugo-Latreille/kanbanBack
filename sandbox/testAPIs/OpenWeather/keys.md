@@ -1,0 +1,1 @@
+OpenWeatherMap : 6e6eb68e30cdac8bf3cea8dd8475ec53

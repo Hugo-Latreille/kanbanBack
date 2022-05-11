@@ -1,0 +1,16 @@
+CF MDCD.tldr
+
+USER: code_user, firstname, lastname
+CREER, 0N USER, 11 LISTE
+
+LISTE: code_liste, nom
+CREER2, 0N USER, 11 CARTE
+CONTIENT, 0N LISTE, 11 CARTE
+CARTE: code_carte, titre, description, position 
+
+POSSEDE, 01 CARTE, 0N COULEUR
+POSSEDE2, 0N LABEL, 0N CARTE
+
+LABEL: code_label, nom
+POSSEDE3, 1N LABEL, 0N COULEUR
+COULEUR: code_couleur, nom
