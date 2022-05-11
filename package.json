@@ -1,0 +1,25 @@
+{
+	"name": "s06-okanban-red-hugo-latreille",
+	"version": "1.0.0",
+	"description": "- [E01 - API & AJAX](docs/cours/E01.md)\r - [E02 - Sequelize Models](docs/cours/E02.md)\r - [E03 - REST API](docs/cours/E03.md)\r - [E04 - REST API (suite)](docs/cours/E04.md)\r - [E05 - Securité](docs/cours/E05.md)",
+	"main": "index.js",
+	"directories": {
+		"doc": "docs"
+	},
+	"scripts": {
+		"db:create": "psql -U okanban -d okanban -f D:/OClock/Challenges/S06-okanban-RED-Hugo-Latreille/data/create_tables.sql",
+		"db:seed": "psql -U okanban -d okanban -f D:/OClock/Challenges/S06-okanban-RED-Hugo-Latreille/data/import_data.sql",
+		"db:reset": "npm run db:create && npm run db:seed"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/O-clock-Cassini/S06-okanban-RED-Hugo-Latreille.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/O-clock-Cassini/S06-okanban-RED-Hugo-Latreille/issues"
+	},
+	"homepage": "https://github.com/O-clock-Cassini/S06-okanban-RED-Hugo-Latreille#readme"
+}
