@@ -7,6 +7,7 @@
 		"doc": "docs"
 	},
 	"scripts": {
+		"start": "nodemon index.js",
 		"db:create": "psql -U okanban -d okanban -f D:/OClock/Challenges/S06-okanban-RED-Hugo-Latreille/data/create_tables.sql",
 		"db:seed": "psql -U okanban -d okanban -f D:/OClock/Challenges/S06-okanban-RED-Hugo-Latreille/data/import_data.sql",
 		"db:reset": "npm run db:create && npm run db:seed"
@@ -24,6 +25,7 @@
 	"homepage": "https://github.com/O-clock-Cassini/S06-okanban-RED-Hugo-Latreille#readme",
 	"dependencies": {
 		"dotenv": "^16.0.1",
+		"express": "^4.18.1",
 		"pg": "^8.7.3",
 		"sequelize": "^6.19.0"
 	}

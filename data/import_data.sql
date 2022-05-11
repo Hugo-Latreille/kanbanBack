@@ -9,7 +9,7 @@ INSERT INTO "carte" ("id", "contenu", "position", "couleur", "liste_id") VALUES
 (2, 'Dire à Charlelie qu''il est pas si drôle en vrai', 2, '#A93226', 1),
 (3, 'Manger du melon', 3, '#2980B9', 1),
 (4, 'Viandox', 1, '#C0392B', 2),
-(5, 'Couches fuites urinaires', 3, null, 1);
+(5, 'Couches fuites urinaires', 3, null, 2);
 
 INSERT INTO "label" ("id", "nom", "couleur") VALUES
 (1, 'Urgent', '#D35400'),
@@ -32,11 +32,11 @@ COMMIT;
 -- Il faut donc mettre à jour la valeur courante de chacune des séquences en séléctionnant l'id maximum de chaque table
 --
 
--- BEGIN;
+BEGIN;
 
--- SELECT setval('liste_id', (SELECT MAX(id) from "liste"));
--- SELECT setval('carte_id', (SELECT MAX(id) from "carte"));
--- SELECT setval('label_id', (SELECT MAX(id) from "label"));
+SELECT setval('liste_id_seq', (SELECT MAX(id) from "liste"));
+SELECT setval('carte_id_seq', (SELECT MAX(id) from "carte"));
+SELECT setval('label_id_seq', (SELECT MAX(id) from "label"));
 
 
--- COMMIT;
+COMMIT;

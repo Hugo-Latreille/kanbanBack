@@ -1,15 +1,13 @@
+require("dotenv").config();
 const { Sequelize } = require("sequelize");
 
-const sequelize = new Sequelize(
-	"postgres://okanban:okanban@localhost/okanban",
-	{
-		define: {
-			updatedAt: "updated_at",
-			createdAt: "created_at",
-		},
-		// logging: false,
-	}
-);
+const sequelize = new Sequelize(process.env.PG_URL, {
+	define: {
+		updatedAt: "updated_at",
+		createdAt: "created_at",
+	},
+	// logging: false,
+});
 
 const test = async () => {
 	try {
