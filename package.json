@@ -1,0 +1,28 @@
+{
+  "name": "s06-okanban-red",
+  "version": "1.0.0",
+  "description": "O'Kanban des Cassini",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "db:create": "psql -U okanban -d okanban -f ./data/create_tables.sql",
+    "db:seed": "psql -U okanban -d okanban -f ./data/seed_database.sql",
+    "db:reset": "npm run db:create && npm run db:seed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/O-clock-Cassini/S06-okanban-RED.git"
+  },
+  "keywords": [
+    "okanban",
+    "gestion de projet"
+  ],
+  "author": "cassini@github",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/O-clock-Cassini/S06-okanban-RED/issues"
+  },
+  "homepage": "https://github.com/O-clock-Cassini/S06-okanban-RED#readme"
+}
