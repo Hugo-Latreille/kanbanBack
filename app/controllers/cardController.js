@@ -88,7 +88,7 @@ const cardController = {
 			const body = req.body;
 			console.log(id, req.body);
 
-			if (isNaN(id)) {
+			if (isNaN(cardId) || isNaN(positionId)) {
 				throw new Error("Un problème avec l'id");
 			}            
 
@@ -181,11 +181,12 @@ const cardController = {
 				throw new Error("Un problème avec l'id");
 			}
 
-            const getCardsFromList = await Card.findAll({
-                where: {list_id: id}
+            const getCardsFromListWithTags = await Card.findAll({
+                where: {list_id: id}, 
+                include: ["tags"]
             })
 
-            res.status(200).json(getCardsFromList)
+            res.status(200).json(getCardsFromListWithTags)
 
 
         } catch (error) {

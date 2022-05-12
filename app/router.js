@@ -16,19 +16,19 @@ router.delete("/lists/:id", listController.deleteList);
 // carteController
 router.get("/cards", cardController.getAllCards);
 router.post("/cards", cardController.createCard);
-router.post("/card/card:Id/position/:positionId", cardController.createCard);
+router.post("/card/:cardId/position/:positionId", cardController.updatePosition);
 router.get("/lists/:id/cards", cardController.getCardsFromList)
 router.get("/cards/:id", cardController.getOneCard);
 router.patch("/cards/:id", cardController.updateCard);
 router.delete("/cards/:id", cardController.deleteCard);
 
 //labelController
-router.get("/tags");
-router.post("/tags");
-router.put("/tag/:id"); //ou patch
-router.delete("/tag/:id");
+router.get("/tags", tagController.getAllTags);
+router.post("/tags", tagController.createTag);
+router.patch("/tag/:id", tagController.getOneTag);
+router.delete("/tag/:id", tagController.deleteTag);
 
-router.post("/tag/:tagId/card/:cardId", tagController.addTagToCard);
-router.delete("/tag/:tagId/card/:cardId", tagController.removeTagFromCard);
+router.put("/cards/:cards_id/tags/:tags_id", tagController.addTagToCard);
+router.delete("/cards/:cards_id/tags/:tags_id", tagController.removeTagFromCard);
 
 module.exports = router;
