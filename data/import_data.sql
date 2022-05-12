@@ -37,6 +37,9 @@ BEGIN;
 SELECT setval('liste_id_seq', (SELECT MAX(id) from "liste"));
 SELECT setval('carte_id_seq', (SELECT MAX(id) from "carte"));
 SELECT setval('label_id_seq', (SELECT MAX(id) from "label"));
+SELECT setval('label_id_seq', (SELECT MAX(id) from "label"));
+SELECT setval('carte_has_label_id_seq', (SELECT MAX(id) from "carte_has_label"));
 
 
 COMMIT;
+

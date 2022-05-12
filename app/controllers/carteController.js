@@ -39,6 +39,29 @@ const carteController = {
 			console.error(error);
 		}
 	},
+	updatePosition: async (req, res) => {
+		try {
+			const carteId = Number(req.params.carteId);
+			const positionId = Number(req.params.positionId);
+			const body = req.body;
+			console.log(id, req.body);
+
+			if (isNaN(id)) {
+				throw new Error("Un problème avec l'id");
+			}
+
+			const updateCartePosition = await Carte.update(
+				{ position: positionId },
+				{
+					where: { id: carteId },
+				}
+			);
+
+			res.json(updateCartePosition);
+		} catch (error) {
+			console.error(error);
+		}
+	},
 	updateCarte: async (req, res) => {
 		try {
 			const id = Number(req.params.id);

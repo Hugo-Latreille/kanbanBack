@@ -1,30 +1,30 @@
 const { Label, Carte } = require("../models/");
 
 const labelController = {
-	getAllCartes: async (req, res) => {
+	getAllLabels: async (req, res) => {
 		try {
 			// const listes = await Liste.findAll();
-			const carteAvecListeEtLabels = await Carte.findAll({
+			const labelAvecListeEtLabels = await Label.findAll({
 				include: ["labels", "liste"],
 			});
-			res.json(carteAvecListeEtLabels);
+			res.json(labelAvecListeEtLabels);
 		} catch (error) {
 			console.error(error);
 		}
 	},
-	getOneCarte: async (req, res) => {
+	getOneLabel: async (req, res) => {
 		try {
 			const id = Number(req.params.id);
 			if (isNaN(id)) {
 				throw new Error("Un problème avec l'id");
 			}
-			const oneCarte = await Carte.findByPk(id);
-			res.json(oneCarte);
+			const oneLabel = await Label.findByPk(id);
+			res.json(oneLabel);
 		} catch (error) {
 			console.error(error);
 		}
 	},
-	createCarte: async (req, res) => {
+	createLabel: async (req, res) => {
 		try {
 			const formData = req.body;
 			console.log(formData);
@@ -32,14 +32,14 @@ const labelController = {
 			// 	nom: "Brigitte",
 			// 	position: 3,
 			// };
-			await Carte.create(formData);
+			await Label.create(formData);
 
-			res.send("Nouvelle carte créée");
+			res.send("Nouveau label créée");
 		} catch (error) {
 			console.error(error);
 		}
 	},
-	updateCarte: async (req, res) => {
+	updateLabel: async (req, res) => {
 		try {
 			const id = Number(req.params.id);
 			const body = req.body;
@@ -49,15 +49,15 @@ const labelController = {
 				throw new Error("Un problème avec l'id");
 			}
 
-			const updateCarte = await Carte.update(body, {
+			const updateLabel = await label.update(body, {
 				where: { id },
 			});
-			res.json(updateCarte);
+			res.json(updateLabel);
 		} catch (error) {
 			console.error(error);
 		}
 	},
-	deleteCarte: async (req, res) => {
+	deleteLabel: async (req, res) => {
 		try {
 			const id = Number(req.params.id);
 
@@ -65,9 +65,9 @@ const labelController = {
 				throw new Error("Un problème avec l'id");
 			}
 
-			const carteToDelete = await Carte.findByPk(id);
-			carteToDelete.destroy();
-			res.send("Carte supprimée");
+			const labelToDelete = await label.findByPk(id);
+			labelToDelete.destroy();
+			res.send("label supprimée");
 		} catch (error) {
 			console.error(error);
 		}
@@ -87,9 +87,10 @@ const labelController = {
 			const addLabelToCarte = await label.addCartesList(carte);
 
 			console.log(addLabelToCarte);
-
 			res.json(addLabelToCarte);
-		} catch (error) {}
+		} catch (error) {
+			console.error(error);
+		}
 	},
 	removeLabelFromCarte: async (req, res) => {
 		try {
@@ -108,7 +109,9 @@ const labelController = {
 			console.log(addLabelToCarte);
 
 			res.json(addLabelToCarte);
-		} catch (error) {}
+		} catch (error) {
+			console.error(error);
+		}
 	},
 };
 

@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("./../database");
 
-class CarteHazLabel extends Model {}
+class CarteHasLabel extends Model {}
 
-CarteHazLabel.init(
+CarteHasLabel.init(
 	{
 		id: {
 			type: DataTypes.INTEGER,
@@ -35,4 +35,4 @@ CarteHazLabel.init(
 	}
 );
 
-module.exports = CarteHazLabel;
+module.exports = CarteHasLabel;

@@ -15,6 +15,10 @@ router.delete("/liste/:id", listeController.deleteListe);
 // carteController
 router.get("/cartes", carteController.getAllCartes);
 router.post("/cartes", carteController.createCarte);
+router.post(
+	"/carte/carte:Id/position/:positionId",
+	carteController.createCarte
+);
 
 router.get("/carte/:id", carteController.getOneCarte);
 router.put("/carte/:id", carteController.updateCarte);
