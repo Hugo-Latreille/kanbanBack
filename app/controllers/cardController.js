@@ -1,13 +1,13 @@
-const { Card } = require("../models/");
+const { Card, List } = require("../models/");
 
 const cardController = {
 	getAllCards: async (req, res) => {
 		try {
 			// const listes = await Liste.findAll();
-			const cardAvecListeEtLabels = await Card.findAll({
-				include: ["labels", "liste"],
+			const allCards = await Card.findAll({
+				order: [["position", "ASC"]],
 			});
-			res.json(cardAvecListeEtLabels);
+			res.json(allCards);
 		} catch (error) {
 			console.error(error);
             res
@@ -21,15 +21,17 @@ const cardController = {
 			if (isNaN(id)) {
 				throw new Error("Un problème avec l'id");
 			}
-			const oneCard = await Card.findByPk(id);
+			const oneCardWithTags = await Card.findByPk(id, {
+                include: ["tags"]
+            });
 
-            if (!oneCard) {
+            if (!oneCardWithTags) {
 				res
 					.status(404)
 					.json({ "error": "List not found. Please verify the provided id." });
 			}
 
-			res.json(oneCard);
+			res.json(oneCardWithTags);
 		} catch (error) {
 			console.error(error);
             res
@@ -172,6 +174,28 @@ const cardController = {
 				.json({ "error": "Unexpected server error. Please try again later." });
 		}
 	},
+    getCardsFromList: async(req, res) => {
+        try {
+            const id = Number(req.params.id);
+			if (isNaN(id)) {
+				throw new Error("Un problème avec l'id");
+			}
+
+            const getCardsFromList = await Card.findAll({
+                where: {list_id: id}
+            })
+
+            res.status(200).json(getCardsFromList)
+
+
+        } catch (error) {
+            console.error(error);
+            res
+				.status(500)
+				.json({ "error": "Unexpected server error. Please try again later." });
+        }
+
+    },
 };
 
 module.exports = cardController;

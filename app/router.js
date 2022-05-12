@@ -17,10 +17,10 @@ router.delete("/lists/:id", listController.deleteList);
 router.get("/cards", cardController.getAllCards);
 router.post("/cards", cardController.createCard);
 router.post("/card/card:Id/position/:positionId", cardController.createCard);
-
-router.get("/card/:id", cardController.getOneCard);
-router.patch("/card/:id", cardController.updateCard);
-router.delete("/card/:id", cardController.deleteCard);
+router.get("/lists/:id/cards", cardController.getCardsFromList)
+router.get("/cards/:id", cardController.getOneCard);
+router.patch("/cards/:id", cardController.updateCard);
+router.delete("/cards/:id", cardController.deleteCard);
 
 //labelController
 router.get("/tags");
