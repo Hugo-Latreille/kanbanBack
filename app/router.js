@@ -23,8 +23,13 @@ router.delete("/carte/:id", carteController.deleteCarte);
 //labelController
 router.get("/labels");
 router.post("/labels");
-router.post("/label/:labelId/carte/:carteId", labelController.addLabelToCarte);
 router.put("/label/:id"); //ou patch
 router.delete("/label/:id");
+
+router.post("/label/:labelId/carte/:carteId", labelController.addLabelToCarte);
+router.delete(
+	"/label/:labelId/carte/:carteId",
+	labelController.removeLabelFromCarte
+);
 
 module.exports = router;

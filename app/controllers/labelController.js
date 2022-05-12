@@ -91,6 +91,25 @@ const labelController = {
 			res.json(addLabelToCarte);
 		} catch (error) {}
 	},
+	removeLabelFromCarte: async (req, res) => {
+		try {
+			const labelId = Number(req.params.labelId);
+			const carteId = Number(req.params.carteId);
+
+			if (isNaN(labelId) || isNaN(carteId)) {
+				throw new Error("Un problème avec l'id");
+			}
+
+			const label = await Label.findByPk(labelId);
+			const carte = await Carte.findByPk(carteId);
+			// const test = await label.getCartesList();
+			const addLabelToCarte = await label.removeCartesList(carte);
+
+			console.log(addLabelToCarte);
+
+			res.json(addLabelToCarte);
+		} catch (error) {}
+	},
 };
 
 module.exports = labelController;
