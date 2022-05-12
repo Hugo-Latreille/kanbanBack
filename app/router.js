@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const listeController = require("./controllers/listeController");
 const carteController = require("./controllers/carteController");
+const labelController = require("./controllers/labelController");
 
 //listeController
 router.get("/listes", listeController.getAllListes);
@@ -22,7 +23,7 @@ router.delete("/carte/:id", carteController.deleteCarte);
 //labelController
 router.get("/labels");
 router.post("/labels");
-router.post("/label/:id/card/:id");
+router.post("/label/:labelId/carte/:carteId", labelController.addLabelToCarte);
 router.put("/label/:id"); //ou patch
 router.delete("/label/:id");
 
