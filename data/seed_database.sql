@@ -42,11 +42,11 @@ COMMIT;
 
 BEGIN;
 
-SELECT setval('list_id_seq', (SELECT MAX(id) from "liste"));
-SELECT setval('card_id_seq', (SELECT MAX(id) from "carte"));
-SELECT setval('tag_id_seq', (SELECT MAX(id) from "label"));
-SELECT setval('label_id_seq', (SELECT MAX(id) from "label"));
-SELECT setval('card_has_tag_id_seq', (SELECT MAX(id) from "carte_has_label"));
+SELECT setval('list_id_seq', (SELECT MAX(id) from "list"));
+SELECT setval('card_id_seq', (SELECT MAX(id) from "card"));
+SELECT setval('tag_id_seq', (SELECT MAX(id) from "tag"));
+
+-- SELECT setval('card_has_tag_id_seq', (SELECT MAX(id) from "card_has_tag"));
 
 
-COMMIT;
+-- COMMIT;

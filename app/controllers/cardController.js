@@ -10,6 +10,9 @@ const cardController = {
 			res.json(cardAvecListeEtLabels);
 		} catch (error) {
 			console.error(error);
+            res
+				.status(500)
+				.json({ "error": "Unexpected server error. Please try again later." });
 		}
 	},
 	getOneCard: async (req, res) => {
@@ -19,24 +22,61 @@ const cardController = {
 				throw new Error("Un problème avec l'id");
 			}
 			const oneCard = await Card.findByPk(id);
+
+            if (!oneCard) {
+				res
+					.status(404)
+					.json({ "error": "List not found. Please verify the provided id." });
+			}
+
 			res.json(oneCard);
 		} catch (error) {
 			console.error(error);
+            res
+				.status(500)
+				.json({ "error": "Unexpected server error. Please try again later." });
 		}
 	},
 	createCard: async (req, res) => {
 		try {
 			const formData = req.body;
+            const {content, color, position} = req.body
 			console.log(formData);
-			// const liste = {
-			// 	nom: "Brigitte",
-			// 	position: 3,
-			// };
+		
+            if (!content) {
+				res.status(400).json({ "error": "Missing body parameter: name" });
+				return;
+			}
+            if (!color) {
+				res.status(400).json({ "error": "Missing body parameter: color" });
+				return;
+			}
+            if (!position) {
+				res.status(400).json({ "error": "Missing body parameter: position" });
+				return;
+			}
+
+			if (content && typeof content !== "string" || color && typeof color !== "string" ) {
+				res
+					.status(400)
+					.json({ "error": "Invalid type: content and color should be a string" });
+				return;
+			}
+			if (position && typeof position !== "number") {
+				res
+					.status(400)
+					.json({ "error": "Invalid type: position should be a number" });
+				return;
+			}
+
 			await Card.create(formData);
 
 			res.send("Nouvelle card créée");
 		} catch (error) {
 			console.error(error);
+            res
+				.status(500)
+				.json({ "error": "Unexpected server error. Please try again later." });
 		}
 	},
 	updatePosition: async (req, res) => {
@@ -48,7 +88,7 @@ const cardController = {
 
 			if (isNaN(id)) {
 				throw new Error("Un problème avec l'id");
-			}
+			}            
 
 			const updateCardPosition = await Card.update(
 				{ position: positionId },
@@ -60,17 +100,40 @@ const cardController = {
 			res.json(updateCardPosition);
 		} catch (error) {
 			console.error(error);
+            res
+				.status(500)
+				.json({ "error": "Unexpected server error. Please try again later." });
 		}
 	},
 	updateCard: async (req, res) => {
 		try {
 			const id = Number(req.params.id);
 			const body = req.body;
+            const {content, color, position} = req.body
 			console.log(id, req.body);
+            
 
 			if (isNaN(id)) {
 				throw new Error("Un problème avec l'id");
 			}
+            if (content && typeof content !== "string" || color && typeof color !== "string" ) {
+				res
+					.status(400)
+					.json({ "error": "Invalid type: content and color should be a string" });
+				return;
+			}
+			if (position && typeof position !== "number") {
+				res
+					.status(400)
+					.json({ "error": "Invalid type: position should be a number" });
+				return;
+			}
+            if (!content && !color && !position) {
+				res.status(400).json({
+					"error":
+						"Invalid body. Should provide at least a 'content' or 'color' or 'position' property",
+				});
+            } 
 
 			const updateCard = await Card.update(body, {
 				where: { id },
@@ -78,6 +141,9 @@ const cardController = {
 			res.json(updateCard);
 		} catch (error) {
 			console.error(error);
+            res
+				.status(500)
+				.json({ "error": "Unexpected server error. Please try again later." });
 		}
 	},
 	deleteCard: async (req, res) => {
@@ -89,10 +155,21 @@ const cardController = {
 			}
 
 			const cardToDelete = await Card.findByPk(id);
+
+            if (!cardToDelete) {
+				res
+					.status(404)
+					.json({ "error": "List not found. Please verify the provided id." });
+				return;
+			}
+
 			cardToDelete.destroy();
 			res.send("Card supprimée");
 		} catch (error) {
 			console.error(error);
+            res
+				.status(500)
+				.json({ "error": "Unexpected server error. Please try again later." });
 		}
 	},
 };
