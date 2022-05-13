@@ -20,7 +20,9 @@ const cardController = {
 	getOneCard: async (req, res) => {
 		const id = Number(req.params.id);
 		if (isNaN(id)) {
-			throw new Error("Un problème avec l'id");
+			res
+				.status(404)
+				.json({ error: "List not found. Please verify the provided id." });
 		}
 		const oneCardWithTags = await Card.findByPk(id, {
 			include: ["tags"],
@@ -69,16 +71,18 @@ const cardController = {
 			return;
 		}
 
-		await Card.create(formData);
+		const newCard = await Card.create(formData);
 
-		res.send("Nouvelle card créée");
+		res.status(201).json(newCard);
 	},
 	updatePosition: async (req, res) => {
 		const cardId = Number(req.params.cardId);
 		const positionId = Number(req.params.positionId);
 
 		if (isNaN(cardId) || isNaN(positionId)) {
-			throw new Error("Un problème avec l'id");
+			res
+				.status(404)
+				.json({ error: "List not found. Please verify the provided id." });
 		}
 
 		const getCard = await Card.findByPk(cardId);
@@ -125,7 +129,9 @@ const cardController = {
 		console.log(id, req.body);
 
 		if (isNaN(id)) {
-			throw new Error("Un problème avec l'id");
+			res
+				.status(404)
+				.json({ error: "List not found. Please verify the provided id." });
 		}
 		if (
 			(content && typeof content !== "string") ||
@@ -158,7 +164,9 @@ const cardController = {
 		const id = Number(req.params.id);
 
 		if (isNaN(id)) {
-			throw new Error("Un problème avec l'id");
+			res
+				.status(404)
+				.json({ error: "List not found. Please verify the provided id." });
 		}
 
 		const cardToDelete = await Card.findByPk(id);
@@ -176,7 +184,9 @@ const cardController = {
 	getCardsFromList: async (req, res) => {
 		const id = Number(req.params.id);
 		if (isNaN(id)) {
-			throw new Error("Un problème avec l'id");
+			res
+				.status(404)
+				.json({ error: "List not found. Please verify the provided id." });
 		}
 
 		const getCardsFromListWithTags = await Card.findAll({

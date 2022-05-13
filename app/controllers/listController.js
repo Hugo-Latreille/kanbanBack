@@ -11,7 +11,9 @@ const listController = {
 	getOneList: async (req, res) => {
 		const id = Number(req.params.id);
 		if (isNaN(id)) {
-			throw new Error("Un problème avec l'id");
+			res
+				.status(404)
+				.json({ error: "List not found. Please verify the provided id." });
 		}
 		const oneList = await List.findByPk(id);
 
@@ -55,7 +57,9 @@ const listController = {
 		console.log(id, req.body);
 
 		if (isNaN(id)) {
-			throw new Error("Un problème avec l'id");
+			res
+				.status(404)
+				.json({ error: "List not found. Please verify the provided id." });
 		}
 
 		const checkList = await List.findByPk(id);
@@ -95,7 +99,9 @@ const listController = {
 		const id = Number(req.params.id);
 
 		if (isNaN(id)) {
-			throw new Error("Un problème avec l'id");
+			res
+				.status(404)
+				.json({ error: "List not found. Please verify the provided id." });
 		}
 
 		const listToDelete = await List.findByPk(id);

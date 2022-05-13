@@ -9,7 +9,9 @@ const tagController = {
 	getOneTag: async (req, res) => {
 		const id = Number(req.params.id);
 		if (isNaN(id)) {
-			throw new Error("Un problème avec l'id");
+			res
+				.status(404)
+				.json({ error: "List not found. Please verify the provided id." });
 		}
 		const oneTag = await tag.findByPk(id);
 
@@ -46,9 +48,9 @@ const tagController = {
 			return;
 		}
 
-		await Tag.create(formData);
+		const newTag = await Tag.create(formData);
 
-		res.send("Nouveau tag créée");
+		res.status(201).json(newTag);
 	},
 	updateTag: async (req, res) => {
 		const id = Number(req.params.id);
@@ -57,7 +59,9 @@ const tagController = {
 		console.log(id, req.body);
 
 		if (isNaN(id)) {
-			throw new Error("Un problème avec l'id");
+			res
+				.status(404)
+				.json({ error: "List not found. Please verify the provided id." });
 		}
 
 		const checkTag = await Tag.findByPk(id);
@@ -94,7 +98,9 @@ const tagController = {
 		const id = Number(req.params.id);
 
 		if (isNaN(id)) {
-			throw new Error("Un problème avec l'id");
+			res
+				.status(404)
+				.json({ error: "List not found. Please verify the provided id." });
 		}
 
 		const tagToDelete = await Tag.findByPk(id);
@@ -112,7 +118,9 @@ const tagController = {
 		const carteId = Number(req.params.cards_id);
 
 		if (isNaN(tagId) || isNaN(carteId)) {
-			throw new Error("Un problème avec l'id");
+			res
+				.status(404)
+				.json({ error: "List not found. Please verify the provided id." });
 		}
 
 		const tag = await Tag.findByPk(tagId);
@@ -133,7 +141,9 @@ const tagController = {
 		const carteId = Number(req.params.cards_id);
 
 		if (isNaN(tagId) || isNaN(carteId)) {
-			throw new Error("Un problème avec l'id");
+			res
+				.status(404)
+				.json({ error: "List not found. Please verify the provided id." });
 		}
 
 		const tag = await Tag.findByPk(tagId);
@@ -145,7 +155,6 @@ const tagController = {
 			});
 			return;
 		}
-		// const test = await tag.getCartesList();
 		const removeTagFromCard = await tag.removeCards(carte);
 
 		res.json(removeTagFromCard);
