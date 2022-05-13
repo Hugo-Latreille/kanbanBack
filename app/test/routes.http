@@ -1,4 +1,4 @@
-@endpoint = http://localhost:5002
+@endpoint = http://localhost:5002/api
 
 ############ LISTS ##########
 
@@ -21,8 +21,28 @@ name=Nouvelle liste
 
 GET {{endpoint}}/cards
 
+###
+
+GET {{endpoint}}/cards/3/position/18
+
+###
+
+GET {{endpoint}}/tags/2
+
 
 
 ############ MISC ##########
 
 GET {{endpoint}}/404
+
+###
+
+POST {{endpoint}}/cards
+Content-Type: application/json
+
+{
+    "content": "test1",
+    "position": 6,
+    "color": "test",
+    "list_id": 1
+}

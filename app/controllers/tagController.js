@@ -13,14 +13,14 @@ const tagController = {
 				.status(404)
 				.json({ error: "List not found. Please verify the provided id." });
 		}
-		const oneTag = await tag.findByPk(id);
+		const oneTag = await Tag.findByPk(id);
 
 		if (!oneTag) {
 			return res
 				.status(404)
 				.json({ error: "List not found. Please verify the provided id." });
 		}
-		res.json(oneTag);
+		res.status(200).json(oneTag);
 	},
 	createTag: async (req, res) => {
 		const formData = req.body;

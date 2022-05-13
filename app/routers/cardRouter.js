@@ -5,7 +5,7 @@ const cw = require("./../middlewares/controllerErrorWrapper");
 
 router.get("/cards", cw(cardController.getAllCards));
 router.post("/cards", cw(cardController.createCard));
-router.post(
+router.patch(
 	"/cards/:cardId/position/:positionId",
 	cw(cardController.updatePosition)
 );

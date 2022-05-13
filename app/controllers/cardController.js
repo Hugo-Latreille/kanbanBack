@@ -8,14 +8,10 @@ const cardController = {
 				["position", "ASC"],
 				["created_at", "DESC"],
 			],
-			include: { association: "tags" },
+			// include: { association: "tags" },
+			where: { list_id: 1 },
 		});
 		res.json(allCards);
-
-		console.error(error);
-		res
-			.status(500)
-			.json({ error: "Unexpected server error. Please try again later." });
 	},
 	getOneCard: async (req, res) => {
 		const id = Number(req.params.id);
@@ -87,40 +83,76 @@ const cardController = {
 
 		const getCard = await Card.findByPk(cardId);
 
-		// get.card.position = ancienne position
+		//getCard.position = ancienne position
 		//positionId = nouvelle position
 
-		//Si nouvelle position < ancienne : on incrémente + 1 toutes les positions supérieures ou = à la nouvelle sauf les positions supérieures ou égales à l'ancienne
+		//* Au sein de la liste correspondante, si nouvelle position < ancienne : on incrémente + 1 toutes les positions >= à la nouvelle sauf les positions >= à l'ancienne
 
-		// Si nouvelle position > ancienne : positions avant ancienne ne bougent pas, positions supérieur à nouvelles ne bougent pas, entre les deux positions  = decrement -1
-
-		const updateOtherCardsPositionsInList = await Card.increment(
-			{
-				position: 1,
-			},
-			{
-				where: {
-					[Op.and]: [
-						{
-							position: {
-								[Op.gte]: positionId,
-							},
-						},
-						{ list_id: getCard.list_id },
-					],
+		if (positionId < getCard.position) {
+			const updateOtherCardsPositionsInList = await Card.increment(
+				{
+					position: 1,
 				},
-			}
-		);
+				{
+					where: {
+						[Op.and]: [
+							{
+								position: {
+									[Op.gte]: positionId,
+									[Op.lt]: getCard.position,
+								},
+							},
+							{ list_id: getCard.list_id },
+						],
+					},
+				}
+			);
 
-		const updateCardPosition = await Card.update(
-			{ position: positionId },
-			{
-				where: { id: cardId },
-			}
-		);
+			const updateCardPosition = await Card.update(
+				{ position: positionId },
+				{
+					where: { id: cardId },
+				}
+			);
 
-		// ne récup que cartes dans une liste ! et faire position décrément !!!
-		res.json(getCard);
+			res.json(updateCardPosition);
+
+			return;
+		}
+
+		// //* Si nouvelle position > ancienne : positions avant ancienne =, positions supérieures la nouvelle =, entre les deux positions : decrement -1
+
+		if (positionId > getCard.position) {
+			const updateOtherCardsPositionsInList = await Card.increment(
+				{
+					position: -1,
+				},
+				{
+					where: {
+						[Op.and]: [
+							{
+								position: {
+									[Op.gt]: getCard.position,
+									[Op.lte]: positionId,
+								},
+							},
+							{ list_id: getCard.list_id },
+						],
+					},
+				}
+			);
+
+			const updateCardPosition = await Card.update(
+				{ position: positionId },
+				{
+					where: { id: cardId },
+				}
+			);
+
+			res.json(updateCardPosition);
+
+			return;
+		}
 	},
 	updateCard: async (req, res) => {
 		const id = Number(req.params.id);
