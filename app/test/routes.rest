@@ -1,0 +1,28 @@
+@endpoint = http://localhost:5002
+
+############ LISTS ##########
+
+### Get all lists
+GET {{endpoint}}/lists
+
+
+### Get one list
+GET {{endpoint}}/lists/1
+
+### Create list
+POST {{endpoint}}/lists
+Content-Type: application/x-www-form-urlencoded
+
+name=Nouvelle liste
+&position=42
+
+
+############ CARDS ##########
+
+GET {{endpoint}}/cards
+
+
+
+############ MISC ##########
+
+GET {{endpoint}}/404
