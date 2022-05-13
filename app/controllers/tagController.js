@@ -22,7 +22,7 @@ const tagController = {
 			const oneTag = await tag.findByPk(id);
 
             if (!oneTag) {
-				res
+				return res
 					.status(404)
 					.json({ "error": "List not found. Please verify the provided id." });
 			}
@@ -159,6 +159,12 @@ const tagController = {
 
 			const tag = await Tag.findByPk(tagId);
 			const carte = await Card.findByPk(carteId);
+            if (!tag || !carte) {
+				res
+					.status(404)
+					.json({ "error": "Tag or carte not found. Please verify the provided ids." });
+				return;
+			}
 			// const test = await tag.getCartesList();
 			const addTagToCard = await tag.addCards(carte);
 			
@@ -181,6 +187,13 @@ const tagController = {
 
 			const tag = await Tag.findByPk(tagId);
 			const carte = await Card.findByPk(carteId);
+
+            if (!tag || !carte) {
+				res
+					.status(404)
+					.json({ "error": "Tag or carte not found. Please verify the provided ids." });
+				return;
+			}
 			// const test = await tag.getCartesList();
 			const removeTagFromCard = await tag.removeCards(carte);
 

@@ -24,9 +24,10 @@ const listController = {
 			const oneList = await List.findByPk(id);
 
 			if (!oneList) {
-				res
+				return res
 					.status(404)
 					.json({ "error": "List not found. Please verify the provided id." });
+				
 			}
 
 			res.json(oneList);

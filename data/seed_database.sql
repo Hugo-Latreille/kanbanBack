@@ -46,7 +46,5 @@ SELECT setval('list_id_seq', (SELECT MAX(id) from "list"));
 SELECT setval('card_id_seq', (SELECT MAX(id) from "card"));
 SELECT setval('tag_id_seq', (SELECT MAX(id) from "tag"));
 
--- SELECT setval('card_has_tag_id_seq', (SELECT MAX(id) from "card_has_tag"));
 
-
--- COMMIT;
+COMMIT;

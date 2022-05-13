@@ -16,7 +16,7 @@ router.delete("/lists/:id", listController.deleteList);
 // carteController
 router.get("/cards", cardController.getAllCards);
 router.post("/cards", cardController.createCard);
-router.post("/card/:cardId/position/:positionId", cardController.updatePosition);
+router.post("/cards/:cardId/position/:positionId", cardController.updatePosition);
 router.get("/lists/:id/cards", cardController.getCardsFromList)
 router.get("/cards/:id", cardController.getOneCard);
 router.patch("/cards/:id", cardController.updateCard);

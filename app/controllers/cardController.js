@@ -1,11 +1,13 @@
 const { Card, List } = require("../models/");
+const { Op } = require("sequelize");
 
 const cardController = {
 	getAllCards: async (req, res) => {
 		try {
 			// const listes = await Liste.findAll();
 			const allCards = await Card.findAll({
-				order: [["position", "ASC"]],
+				order: [["position", "ASC"], ["created_at", "DESC"]],
+				include: {association: "cards"}
 			});
 			res.json(allCards);
 		} catch (error) {
@@ -29,6 +31,7 @@ const cardController = {
 				res
 					.status(404)
 					.json({ "error": "List not found. Please verify the provided id." });
+					return;
 			}
 
 			res.json(oneCardWithTags);
@@ -85,12 +88,32 @@ const cardController = {
 		try {
 			const cardId = Number(req.params.cardId);
 			const positionId = Number(req.params.positionId);
-			const body = req.body;
-			console.log(id, req.body);
+			
 
 			if (isNaN(cardId) || isNaN(positionId)) {
 				throw new Error("Un problème avec l'id");
-			}            
+			} 
+
+			const getCard = await Card.findByPk(cardId)		
+
+			// get.card.position = ancienne position
+			//positionId = nouvelle position
+
+			//Si nouvelle position < ancienne : on incrémente + 1 toutes les positions supérieures à la nouvelle sauf les positions supérieures ou égales à l'ancienne
+
+			// Si nouvelle position > ancienne : 
+
+			
+			const updateOtherCardsPositionsInList = await Card.increment({
+				position: 1
+			}, {where:{
+				[Op.and]: [
+					{ position: {
+						
+						[Op.gte]: positionId
+			}}, 
+					{list_id: getCard.list_id}]
+			}})
 
 			const updateCardPosition = await Card.update(
 				{ position: positionId },
@@ -99,7 +122,10 @@ const cardController = {
 				}
 			);
 
-			res.json(updateCardPosition);
+			
+
+			// ne récup que cartes dans une liste ! et faire position décrément !!!
+		res.json(getCard)
 		} catch (error) {
 			console.error(error);
             res
