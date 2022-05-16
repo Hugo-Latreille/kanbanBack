@@ -27,6 +27,7 @@
 	},
 	"homepage": "https://github.com/O-clock-Cassini/S06-okanban-RED#readme",
 	"dependencies": {
+		"cors": "^2.8.5",
 		"dotenv": "^16.0.1",
 		"express": "^4.18.1",
 		"pg": "^8.7.3",

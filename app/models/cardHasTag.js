@@ -1,15 +1,15 @@
 const { Model, DataTypes } = require("sequelize");
-const sequelize = require("./../database");
+const sequelize = require("../database");
 
-class CarteHasLabel extends Model {}
+class CardHasTag extends Model {}
 
-cardHasTag.init(
+CardHasTag.init(
 	{
-		carte_id: {
+		card_id: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 		},
-		label_id: {
+		tag_id: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 		},
@@ -20,4 +20,4 @@ cardHasTag.init(
 	}
 );
 
-module.exports = cardHasTag;
+module.exports = CardHasTag;

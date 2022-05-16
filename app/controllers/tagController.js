@@ -1,4 +1,5 @@
 const { Tag, Card } = require("../models/");
+const CardHasTag = require("../models/cardHasTag");
 
 const tagController = {
 	getAllTags: async (req, res) => {
@@ -111,7 +112,7 @@ const tagController = {
 			return;
 		}
 		tagToDelete.destroy();
-		res.status(204).send("tag supprimée");
+		res.status(204).send("tag supprimé");
 	},
 	addTagToCard: async (req, res) => {
 		const tagId = Number(req.params.tags_id);

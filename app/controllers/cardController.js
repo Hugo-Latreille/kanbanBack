@@ -1,4 +1,4 @@
-const { Card, List } = require("../models/");
+const { Card } = require("../models/");
 const { Op } = require("sequelize");
 
 const cardController = {
@@ -9,7 +9,7 @@ const cardController = {
 				["created_at", "DESC"],
 			],
 			// include: { association: "tags" },
-			where: { list_id: 1 },
+			where: { list_id: 1 }, // pour tester les positions
 		});
 		res.json(allCards);
 	},
@@ -38,10 +38,10 @@ const cardController = {
 		const { content, color, position } = req.body;
 		console.log(formData);
 
-		if (!content) {
-			res.status(400).json({ error: "Missing body parameter: name" });
-			return;
-		}
+		// if (!content) {
+		// 	res.status(400).json({ error: "Missing body parameter: name" });
+		// 	return;
+		// }
 		if (!color) {
 			res.status(400).json({ error: "Missing body parameter: color" });
 			return;
@@ -83,13 +83,13 @@ const cardController = {
 
 		const getCard = await Card.findByPk(cardId);
 
-		//getCard.position = ancienne position
-		//positionId = nouvelle position
+		//!getCard.position = ancienne position
+		//!positionId = nouvelle position
 
 		//* Au sein de la liste correspondante, si nouvelle position < ancienne : on incrémente + 1 toutes les positions >= à la nouvelle sauf les positions >= à l'ancienne
 
 		if (positionId < getCard.position) {
-			const updateOtherCardsPositionsInList = await Card.increment(
+			await Card.increment(
 				{
 					position: 1,
 				},
@@ -107,23 +107,12 @@ const cardController = {
 					},
 				}
 			);
-
-			const updateCardPosition = await Card.update(
-				{ position: positionId },
-				{
-					where: { id: cardId },
-				}
-			);
-
-			res.json(updateCardPosition);
-
-			return;
 		}
 
-		// //* Si nouvelle position > ancienne : positions avant ancienne =, positions supérieures la nouvelle =, entre les deux positions : decrement -1
+		//* Si nouvelle position > ancienne : positions avant ancienne =, positions supérieures la nouvelle =, entre les deux positions : decrement -1
 
 		if (positionId > getCard.position) {
-			const updateOtherCardsPositionsInList = await Card.increment(
+			await Card.increment(
 				{
 					position: -1,
 				},
@@ -141,18 +130,14 @@ const cardController = {
 					},
 				}
 			);
-
-			const updateCardPosition = await Card.update(
-				{ position: positionId },
-				{
-					where: { id: cardId },
-				}
-			);
-
-			res.json(updateCardPosition);
-
-			return;
 		}
+		const updateCardPosition = await Card.update(
+			{ position: positionId },
+			{
+				where: { id: cardId },
+			}
+		);
+		res.json(updateCardPosition);
 	},
 	updateCard: async (req, res) => {
 		const id = Number(req.params.id);

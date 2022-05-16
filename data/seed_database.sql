@@ -15,7 +15,7 @@ VALUES
 
   (4, 1, 'Dormir', '#F00', 2),
   (5, 2, 'Nourrir le chat', NULL, 2),
-  (6, 2, 'Devenir le meilleur dresseur', NULL, 2),
+  (6, 3, 'Devenir le meilleur dresseur', NULL, 2),
 
   (7, 1, 'Maman le 01/01/1970', '#00F', 3)
 ;

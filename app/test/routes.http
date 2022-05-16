@@ -46,3 +46,9 @@ Content-Type: application/json
     "color": "test",
     "list_id": 1
 }
+
+###
+PUT {{endpoint}}/cards/4/tags/4
+
+###
+DELETE {{endpoint}}/cards/4/tags/1

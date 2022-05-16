@@ -30,10 +30,11 @@ CREATE TABLE "tag" (
 );
 
 CREATE TABLE "card_has_tag" (
+  PRIMARY KEY ("card_id", "tag_id"),
   "card_id" INTEGER NOT NULL REFERENCES "card"("id") ON DELETE CASCADE,
   "tag_id" INTEGER NOT NULL REFERENCES "tag"("id") ON DELETE CASCADE,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY ("card_id", "tag_id")
+  "updated_at" TIMESTAMPTZ
 );
 
 -- Clé primaire composite. A noter : une clé primaire est toujours UNIQUE.
