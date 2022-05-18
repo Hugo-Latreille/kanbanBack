@@ -9,7 +9,7 @@ const cardController = {
 				["created_at", "DESC"],
 			],
 			// include: { association: "tags" },
-			where: { list_id: 1 }, // pour tester les positions
+			// where: { list_id: 1 }, // pour tester les positions
 		});
 		res.json(allCards);
 	},
