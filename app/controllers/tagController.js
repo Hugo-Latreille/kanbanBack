@@ -1,11 +1,10 @@
 const { Tag, Card } = require("../models/");
-const CardHasTag = require("../models/cardHasTag");
 
 const tagController = {
 	getAllTags: async (req, res) => {
 		// const listes = await Liste.findAll();
-		const tagAvecListeEtTags = await tag.findAll();
-		res.status(200).json(tagAvecListeEtTags);
+		const allTags = await Tag.findAll();
+		res.status(200).json(allTags);
 	},
 	getOneTag: async (req, res) => {
 		const id = Number(req.params.id);

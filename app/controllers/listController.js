@@ -27,7 +27,8 @@ const listController = {
 	},
 	createList: async (req, res) => {
 		const formData = req.body;
-		const { name, position } = req.body;
+		const { name } = req.body;
+		const position = Number(req.body.position);
 		console.log(formData);
 
 		if (!name) {

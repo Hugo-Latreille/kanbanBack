@@ -8,7 +8,7 @@ const cardController = {
 				["position", "ASC"],
 				["created_at", "DESC"],
 			],
-			// include: { association: "tags" },
+			include: { association: "tags" },
 			// where: { list_id: 1 }, // pour tester les positions
 		});
 		res.json(allCards);
@@ -35,7 +35,8 @@ const cardController = {
 	},
 	createCard: async (req, res) => {
 		const formData = req.body;
-		const { content, color, position } = req.body;
+		const { content, color } = req.body;
+		const position = Number(req.body.position);
 		console.log(formData);
 
 		// if (!content) {
@@ -142,7 +143,9 @@ const cardController = {
 	updateCard: async (req, res) => {
 		const id = Number(req.params.id);
 		const body = req.body;
-		const { content, color, position } = req.body;
+		const { content, color } = req.body;
+		const position = Number(req.body.position);
+		const list_id = Number(req.body.list_id);
 		console.log(id, req.body);
 
 		if (isNaN(id)) {
@@ -165,7 +168,7 @@ const cardController = {
 				.json({ error: "Invalid type: position should be a number" });
 			return;
 		}
-		if (!content && !color && !position) {
+		if (!content && !color && !position && !list_id) {
 			res.status(400).json({
 				error:
 					"Invalid body. Should provide at least a 'content' or 'color' or 'position' property",

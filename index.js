@@ -6,13 +6,13 @@ const cors = require("cors");
 const multer = require("multer");
 const bodyParser = multer();
 
-// app.use(express.static('static'));
 // app.set('view engine', 'ejs');
 // app.set('views', __dirname + './../../views');
 app.use(cors("*"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.none());
+app.use(express.static("public"));
 
 app.get("/", (_, res) => {
 	res.redirect("/api/docs");
